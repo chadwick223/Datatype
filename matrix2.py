@@ -62,10 +62,56 @@ class matrix:
                 row_string += str(value) + " "
             result+= row_string.rstrip() + "\n"
         return result.rstrip()
-
-A=matrix(4,4,[[4,3],[5,6]])
-print(A.get_data())
+    
+    def __add__(self,other):
+        if not isinstance(other,type(self)) or self.__m != other.__m or self.__n !=other.__n:
+            return("Unsupproted format")
+        else:
+            matrix_addition=[]
+            for i in range (self.__m):
+                row=[]
+                for j in range(self.__n):
+                    temp=self.__data[i][j] +other.__data[i][j]
+                    row.append(temp)
+                matrix_addition.append(row)
             
+            ## A+B  should return the same type as A and B . both A and B are matrix, so A+b should also be matrix
+
+            return matrix(self.__m,self.__n,matrix_addition)
+    def __sub__(self,other):
+        if not isinstance(other,type(self)) or self.__m!=other.__m or self.__n!=other.__n:
+            return("Unsupported format")
+        else:
+            matrix_substraction=[]
+            for i in range (self.__m):
+                row=[]
+                for j in range(self.__n):
+                    temp=self.__data[i][j]-other.__data[i][j]
+                    row.append(temp)
+                matrix_substraction.append(row)
+            return matrix(self.__m,self.__n,matrix_substraction)
+    def __mul__(self,other):
+        if not isinstance(other,type(self)) or self.__n!=other.__m:
+            return ("matrix multiplication not possible")
+        else:
+            multiplied_matrix=[]
+            for i in range(self.__m):
+                row=[]
+                for j in range(other.__n):
+                    sum_val=0
+                    for k in range(self.__n):
+                        sum_val+=self.__data[i][k]*other.__data[k][j]
+                    row.append(sum_val)
+                multiplied_matrix.append(row)
+            return matrix(self.__m,other.__n,multiplied_matrix)
+
+
+
+
+A=matrix(1,3,[[3,1,4]])
+B=matrix(3,2,[[4,3],[2,5],[6,8]])
+print(A*B)
+
     
 
 
