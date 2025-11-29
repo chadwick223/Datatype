@@ -1,14 +1,26 @@
 class matrix:
+
+    #stactic var
+    __counter=0
     
     def __init__(self,m,n,data=None):
         self.__m=m
         self.__n=n
         self.__data=None
+        matrix.__counter +=1
 
         if data is None:
             self.__createzeromatrix()
         else:
             self.set_data(data)
+
+
+    @staticmethod
+
+    def getcounter():
+        return matrix.__counter
+    
+
     def __createzeromatrix(self):
         self.__data=[]
         for i in range(self.__m):
@@ -36,6 +48,8 @@ class matrix:
         else:
             self.__data= data
             return ("data set successfully")
+        
+
     def set_rows(self,new_row):
         if type(new_row)==int:
             self.__m=new_row
@@ -78,6 +92,8 @@ class matrix:
             ## A+B  should return the same type as A and B . both A and B are matrix, so A+b should also be matrix
 
             return matrix(self.__m,self.__n,matrix_addition)
+        
+
     def __sub__(self,other):
         if not isinstance(other,type(self)) or self.__m!=other.__m or self.__n!=other.__n:
             return("Unsupported format")
@@ -90,6 +106,8 @@ class matrix:
                     row.append(temp)
                 matrix_substraction.append(row)
             return matrix(self.__m,self.__n,matrix_substraction)
+        
+
     def __mul__(self,other):
         if not isinstance(other,type(self)) or self.__n!=other.__m:
             return ("matrix multiplication not possible")
@@ -104,13 +122,27 @@ class matrix:
                     row.append(sum_val)
                 multiplied_matrix.append(row)
             return matrix(self.__m,other.__n,multiplied_matrix)
+    
+    @staticmethod
+    def identity_matrix(n):
+        data=[]
+        for i in range(n):
+            row=[]
+
+            for j in range(n):
+                if i==j:
+                    row.append(1)
+                else:
+                    row.append(0)
+            data.append(row)
+        return matrix (n,n,data)
 
 
 
 
-A=matrix(1,3,[[3,1,4]])
-B=matrix(3,2,[[4,3],[2,5],[6,8]])
-print(A*B)
+print(matrix.identity_matrix(3))
+
+
 
     
 
